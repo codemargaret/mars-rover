@@ -9,6 +9,17 @@ import { AppComponent } from './app.component';
 import { RoverFormComponent } from './rover-form/rover-form.component';
 import { PhotosListComponent } from './photos-list/photos-list.component';
 
+import { config } from './api-keys';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+export const firebaseConfig = {
+  apiKey: config.apiKey,
+  authDomain: config.authDomain,
+  databaseURL: config.databaseURL,
+  storageBucket: config.storageBucket
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +30,9 @@ import { PhotosListComponent } from './photos-list/photos-list.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
