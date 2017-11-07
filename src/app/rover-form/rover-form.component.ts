@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { MarsRoverApiPhotosService } from '../mars-rover-api-photos.service';
 
@@ -8,14 +8,20 @@ import { MarsRoverApiPhotosService } from '../mars-rover-api-photos.service';
   styleUrls: ['./rover-form.component.css'],
   providers: [ MarsRoverApiPhotosService ]
 })
-export class RoverFormComponent implements OnInit {
+export class RoverFormComponent {
   photos: any[] = null;
+  noPhotos: boolean=false;
   constructor(private marsRoverPhotos: MarsRoverApiPhotosService) { }
   getRoverImages(date: string, camera: string) {
-    this.marsRoverPhotos.getByDateAndCamera(date, camera).subscribe(response => {
+    this.noPhotos = false;
+    this.marsRoverPhotos.getByDateAndCamera(date, camera).subscribe(response =>{
+      if(response.json().photos.length > 0)
+      {
         this.photos = response.json();
+      }
+      else {
+        this.noPhotos = true;
+      }
     });
-  }
-  ngOnInit() {
   }
 }
